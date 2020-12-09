@@ -105,14 +105,23 @@ function getLinearEquationRoot(a, b) {
  * @return {number}
  *
  * @example:
- *   (1,0) (0,1)     => π/2
+ *   (1,0) (0,1)     => π/2 .. Это полукруг
  *   (0,1) (0,-1)    => π
  *   (0,-1) (1,0)    => π/2
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  // по формуле https://ru.onlinemschool.com/math/library/vector/angl/
+  // скалярное произведение векторов:
+  const res1 = ((x1 * x2) + (y1 * y2));
+  // модули векторов
+  const a = Math.sqrt(x1 ** 2 + y1 ** 2);
+  const b = Math.sqrt(x2 ** 2 + y2 ** 2);
+  // угол между векторами:
+  const angleBetweenVectors = res1 / (a * b);
+  // перевод значения в радианы
+  return Math.acos(angleBetweenVectors);
 }
 
 /**
@@ -160,8 +169,9 @@ function parseNumberFromString(value) {
  *   3,3,3   => 5.196152422706632
  *   1,2,3   => 3.741657386773941
  */
-function getParallelipidedDiagonal(/* a, b, c */) {
-  throw new Error('Not implemented');
+// d² = а² + b² + c²
+function getParallelipidedDiagonal(a, b, c) {
+  return Math.sqrt(a ** 2 + b ** 2 + c ** 2);
 }
 
 /**
@@ -181,8 +191,8 @@ function getParallelipidedDiagonal(/* a, b, c */) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  return Math.round(num / (10 ** pow)) * (10 ** pow);
 }
 
 /**
