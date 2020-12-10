@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* ********************************************************************************************
  *                                                                                            *
  * Plese read the following tutorial before implementing tasks:                               *
@@ -468,8 +469,20 @@ function getIdentityMatrix(n) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  function difference(a, b) {
+    return Math.abs(a - b) + 1;
+  }
+
+  let current = start - 1;
+  return Array(difference(start, end)).fill(0).map((elem, index, arr) => {
+    current += 1;
+    if (current <= end) {
+      // eslint-disable-next-line no-param-reassign
+      return arr[index] = current;
+    }
+    return false;
+  });
 }
 
 /**
