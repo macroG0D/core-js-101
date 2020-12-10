@@ -234,8 +234,15 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  return arr.reduce((acc, current, index) => {
+    if (index > 0) {
+      acc.push(current + acc[index - 1]);
+    } else {
+      acc.push(current);
+    }
+    return acc;
+  }, []);
 }
 
 /**
@@ -267,8 +274,8 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr.reduce((acc, current, index) => acc.concat(Array(index + 1).fill(current)), []);
 }
 
 /**
@@ -533,8 +540,19 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const map = new Map();
+  // eslint-disable-next-line array-callback-return
+  array.map((item) => {
+    const key = keySelector(item);
+    const collection = map.get(key);
+    if (!collection) {
+      map.set(key, [valueSelector(item)]);
+    } else {
+      collection.push(valueSelector(item));
+    }
+  });
+  return map;
 }
 
 /**
@@ -590,8 +608,23 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length < 2) {
+    return arr;
+  }
+  const littleHalf = Math.floor(arr.length / 2);
+  const head = arr.slice(0, littleHalf);
+  const tail = arr.slice(-littleHalf);
+  arr.map((item, index) => {
+    if (index < littleHalf) {
+      arr.shift();
+      arr.pop();
+    }
+    return true;
+  });
+  arr.unshift(...tail);
+  arr.push(...head);
+  return arr;
 }
 
 module.exports = {
