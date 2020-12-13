@@ -1,4 +1,3 @@
-/* eslint-disable no-return-assign */
 /* *************************************************************************************************
  *                                                                                                *
  * Plese read the following tutorial before implementing tasks:                                   *
@@ -422,8 +421,6 @@ function getCommonDirectoryPath(pathes) {
   const commonDirectoryPath = [];
   let splittedPaths = [...pathes].join().split(',');
   splittedPaths = splittedPaths.map((elem) => elem.split('/'));
-  // eslint-disable-next-line no-param-reassign
-  splittedPaths.map((elem) => (elem[0] === '' ? elem[0] = '/' : false));
   splittedPaths[0].forEach((elem) => commonDirectoryPath.push(elem));
 
   splittedPaths.forEach((pathArr) => {
@@ -434,7 +431,9 @@ function getCommonDirectoryPath(pathes) {
       }
     }
   });
-
+  if (commonDirectoryPath.length > 0) {
+    commonDirectoryPath.unshift('');
+  }
   return commonDirectoryPath.length > 0 ? `${commonDirectoryPath.join('/').slice(1)}/` : commonDirectoryPath.join('/');
 }
 
