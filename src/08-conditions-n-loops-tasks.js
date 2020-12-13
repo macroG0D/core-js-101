@@ -492,8 +492,54 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  let totalPositions = [...position];
+  const verticals = [];
+  const diagonals = [];
+
+  // fix arrays with empty cells in end
+  totalPositions.forEach((el) => (el.length < 3 ? el.push(undefined) : 0));
+
+  // get first diagonal and save it's elements in this array
+  const diagonal1 = [];
+  for (let i = 0; i < position.length; i += 1) {
+    diagonal1.push(position[i][i]);
+  }
+
+  // get first diagonal and save it's elements in this array
+  const diagonal2 = [];
+  let counter = position.length - 1;
+  for (let i = 0; i < position.length; i += 1) {
+    diagonal2.push(position[i][counter]);
+    counter -= 1;
+  }
+  // concat both diagonals arrays
+  diagonals.push(diagonal1);
+  diagonals.push(diagonal2);
+
+  // get all vertical lines and push them into totalPositions as seperated arrays
+  for (let i = 0; i < position.length; i += 1) {
+    const verticalTemp = [];
+    for (let k = 0; k < position[i].length; k += 1) {
+      verticalTemp.push(position[k][i]);
+    }
+    verticals.push(verticalTemp);
+  }
+
+  // concat diagonals and verticals with the main array
+  totalPositions = [...totalPositions, ...verticals, ...diagonals];
+
+  // iterrate through the whole main array and search for inner array
+  // which contains only same elements
+  for (let i = 0; i < totalPositions.length; i += 1) {
+    // every conditional element — if first in line is same as others — it is a winner!
+    const zeroOrX = (val) => val === totalPositions[i][0];
+    if (!totalPositions[i].includes(undefined)
+      && totalPositions[i].every(zeroOrX)) {
+      return totalPositions[i][0];
+    }
+  }
+  return undefined;
 }
 
 
