@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* *************************************************************************************************
  *                                                                                                *
  * Plese read the following tutorial before implementing tasks:                                   *
@@ -385,8 +386,23 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  let decimal = num;
+  const res = [];
+  while (decimal > 0) {
+    if (decimal % n !== 0) {
+      const rem = decimal % n;
+      res.push(rem);
+      decimal -= rem;
+      decimal /= n;
+    } else {
+      decimal /= n;
+      if (decimal > 0) {
+        res.push(0);
+      }
+    }
+  }
+  return res.reverse().join('');
 }
 
 
@@ -402,8 +418,24 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const commonDirectoryPath = [];
+  let splittedPaths = [...pathes].join().split(',');
+  splittedPaths = splittedPaths.map((elem) => elem.split('/'));
+  // eslint-disable-next-line no-param-reassign
+  splittedPaths.map((elem) => (elem[0] === '' ? elem[0] = '/' : false));
+  splittedPaths[0].forEach((elem) => commonDirectoryPath.push(elem));
+
+  splittedPaths.forEach((pathArr) => {
+    for (let i = 0; i < commonDirectoryPath.length; i += 1) {
+      if (pathArr[i] !== commonDirectoryPath[i]) {
+        commonDirectoryPath.splice(i);
+        return;
+      }
+    }
+  });
+
+  return commonDirectoryPath.length > 0 ? `${commonDirectoryPath.join('/').slice(1)}/` : commonDirectoryPath.join('/');
 }
 
 
